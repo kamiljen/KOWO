@@ -1,8 +1,6 @@
 import sqlite3
-import schedule
-import time
 from search_engine import Book
-from notifications import check_and_notify  # Import nowego modułu
+from notifications import check_and_notify  # Import modułu
 
 def search_engine_main():
     """Główna funkcja wyszukiwania książek"""
@@ -40,24 +38,5 @@ def search_engine_main():
     finally:
         conn.close()
 
-def schedule_search():
-    """Funkcja harmonogramująca uruchamianie wyszukiwania."""
-    schedule.every().day.at("08:00").do(search_engine_main)
-    schedule.every().day.at("10:00").do(search_engine_main)
-    schedule.every().day.at("12:00").do(search_engine_main)
-    schedule.every().day.at("14:00").do(search_engine_main)
-    schedule.every().day.at("18:00").do(search_engine_main)
-    schedule.every().day.at("20:00").do(search_engine_main)
-    schedule.every().day.at("22:00").do(search_engine_main)
-
-    print("Harmonogram zadań ustawiony. Oczekiwanie na uruchomienie...")
-
-    while True:
-        schedule.run_pending()
-        time.sleep(1)  # Sprawdzenie harmonogramu co sekundę
-
 if __name__ == "__main__":
-    try:
-        schedule_search()
-    except KeyboardInterrupt:
-        print("\nProgram zatrzymany ręcznie.")
+    search_engine_main()  # Po prostu uruchamiamy funkcję i skrypt kończy działanie
