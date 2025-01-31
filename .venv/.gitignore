@@ -1,0 +1,4 @@
+env_variables.env
+main(manual).py
+bookstore.db
+*.db
