@@ -1,4 +1,6 @@
+import time
 import sqlite3
+from datetime import datetime
 from search_engine import Book
 from notifications import check_and_notify  # Import modułu
 
@@ -38,5 +40,16 @@ def search_engine_main():
     finally:
         conn.close()
 
+def main():
+    target_hours = {10, 13, 17, 22}  # Godziny uruchamiania skryptu
+    while True:
+        now = datetime.now()
+        if now.hour in target_hours and now.minute == 0:  # Uruchamiaj tylko na początku godziny
+            try:
+                search_engine_main()
+            except Exception as e:
+                print(f"Błąd: {e}")
+        time.sleep(60)  # Sprawdzaj co minutę
+
 if __name__ == "__main__":
-    search_engine_main()  # Po prostu uruchamiamy funkcję i skrypt kończy działanie
+    main()
